@@ -1,4 +1,4 @@
-.container {
+/* .container {
   width: 100%;
   padding: 20px;
 }
@@ -85,3 +85,246 @@
 .login-text a:hover {
   text-decoration: underline;
 }
+
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+} */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  padding: 45px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff6b6b, #ee5a6f, #ff6b6b);
+  background-size: 200% 100%;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 0%; }
+}
+
+.register-card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #2d3748;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #718096;
+  margin-bottom: 35px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #010611;
+  letter-spacing: 0.3px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  outline: none;
+  font-size: 15px;
+  color: #2d3748;
+  background: #ffffff; /* white */
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #ff6b6b;
+  background: #ffffff; /* stay white */
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-group input:disabled {
+  background: #ffffff; /* white even when disabled */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+.btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ee5a6f 0%, #c92a2a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #718096;
+}
+
+.login-text a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.login-text a:hover {
+  color: #ee5a6f;
+  text-decoration: underline;
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error::before {
+  content: '⚠';
+  font-size: 14px;
+}
+
+.error-banner {
+  background: #fed7d7;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #c53030;
+  border: 1px solid #fc8181;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideDown 0.3s ease;
+}
+
+.error-banner::before {
+  content: '❌';
+  font-size: 16px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .register-card {
+    padding: 35px 25px;
+  }
+
+  .register-card h2 {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+/* Loading state animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn:disabled::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+

@@ -1,22 +1,30 @@
-import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-const Login = React.lazy(() => import("./pages/public/Login"));
-const Register = React.lazy(() => import("./pages/public/Register"));
+import PrivateRoutes from "./routes/privateRoute.jsx";
+import PublicRoutes from "./routes/publicRoute.jsx";
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const token = localStorage.getItem("token");
 
   return (
-    <>
-      <Suspense fallback={<div>Loading....</div>}>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Suspense>
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {/* Public routes - accessible to everyone */}
+        <Route path="/*" element={<PublicRoutes />} />
+        
+        {/* Private routes - need wildcard for nested routes */}
+        <Route 
+          path="/products/*" 
+          element={token ? <PrivateRoutes /> : <Navigate to="/login" replace />} 
+        />
+        <Route 
+          path="/feedback/*" 
+          element={token ? <PrivateRoutes /> : <Navigate to="/login" replace />} 
+        />
+      </Routes>
+    </Suspense>
   );
 }
 

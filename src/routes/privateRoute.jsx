@@ -1,15 +1,35 @@
+
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-const Product = React.lazy(() => import("../pages/private/Product"));
-const Feedback = React.lazy(() => import("../pages/private/Feedback"));
+const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
+const Product = React.lazy(() => import("../pages/private/Product.jsx"));
+const Feedback = React.lazy(() => import("../pages/private/Feedback.jsx"));
 
 const PrivateRoutes = () => {
+  // Check if token exists
+  const token = localStorage.getItem('token');
+  
+  console.log("=== PRIVATE ROUTES CHECK ===");
+  console.log("Token from localStorage:", token);
+  console.log("Token exists:", !!token);
+  console.log("==========================");
+
+  // If no token, redirect to login
+  if (!token) {
+    console.log(" No token - Redirecting to /login");
+    return <Navigate to="/login" replace />;
+  }
+
+  console.log("Token found - Allowing access");
+
+  // If token exists, show the routes
   return (
-    <Suspense fallback={<div>Loading private page...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<Product />} />  {/* This handles /products */}
-        <Route path="/feedback" element={<Feedback />} />  {/* This won't work with current setup */}
+        <Route index element={<Dashboard />} />
+        <Route path="product" element={<Product />} />
+        <Route path="feedback" element={<Feedback />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

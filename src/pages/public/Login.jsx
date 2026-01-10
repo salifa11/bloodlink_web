@@ -1,13 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom"; // added useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import "../../css/auth.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./schema/login.schema";
-import { apiCall } from "../../../utils/api";
-
 
 const Login = () => {
-  const navigate = useNavigate(); // for redirect after login
+  const navigate = useNavigate();
 
   const {
     register,
@@ -19,16 +17,50 @@ const Login = () => {
 
   const onLogin = async (data) => {
     try {
-      // Call backend login API
-      const res = await apiCall("post", "/auth/login", { data });
+      console.log("=== FRONTEND LOGIN ===");
+      console.log("Form data:", data);
 
-      // Save JWT token
-      localStorage.setItem("token", res.token);
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        })
+      });
 
-      // Optionally redirect to dashboard/home
+      console.log("Response status:", response.status);
+      console.log("Response OK:", response.ok);
+
+      const result = await response.json();
+      console.log("Response data:", result);
+
+      if (!response.ok) {
+        console.error("Login failed:", result.message);
+        alert(result.message || "Login failed");
+        return;
+      }
+
+      console.log("✅ Token received:", result.token);
+      console.log("✅ User data:", result.user);
+      
+      // Save token
+      localStorage.setItem("token", result.token);
+      
+      // Verify it was saved
+      const savedToken = localStorage.getItem("token");
+      console.log("✅ Token saved to localStorage:", savedToken);
+      console.log("✅ Tokens match:", savedToken === result.token);
+
+      console.log("=====================");
+
+      // Navigate to dashboard
       navigate("/dashboard");
     } catch (err) {
-      alert(err); // show error from backend
+      console.error("❌ Error during login:", err);
+      alert(err.message || "Network error");
     }
   };
 
@@ -71,3 +103,43 @@ const Login = () => {
 };
 
 export default Login;
+// ```
+
+// ## Steps to Debug:
+
+// 1. **Restart your backend server** (the one running on port 5000)
+// 2. **Open TWO consoles:**
+//    - Backend terminal (where you run `npm start` for backend)
+//    - Browser DevTools Console (F12)
+
+// 3. **Try to login with:** `ram@gmail.com` / `123456`
+
+// 4. **Check BOTH consoles:**
+
+// **Backend Terminal should show:**
+// ```
+// === LOGIN REQUEST ===
+// Request body: { email: 'ram@gmail.com', password: '123456' }
+// Email: ram@gmail.com
+// Password received: Yes
+// User found: Yes
+// Password match: true
+// Token generated: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+// JWT_SECRET exists: true
+// JWT_EXPIRES_IN: 7d
+// Sending response: { message: 'Login successful', token: '...', user: {...} }
+// ===================
+// ```
+
+// **Browser Console should show:**
+// ```
+// === FRONTEND LOGIN ===
+// Form data: {email: 'ram@gmail.com', password: '123456'}
+// Response status: 200
+// Response OK: true
+// Response data: {message: 'Login successful', token: '...', user: {...}}
+// ✅ Token received: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+// ✅ User data: {id: 8, email: 'ram@gmail.com', name: 'ram'}
+// ✅ Token saved to localStorage: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+// ✅ Tokens match: true
+// =====================

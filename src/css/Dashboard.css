@@ -87,6 +87,7 @@ body {
   max-width: var(--container-width);
   margin: 2.5rem auto 4rem auto; /* Top and Bottom spacing */
   padding: 0 2rem;
+  padding-top: 3rem; /* Space below navbar */
   display: flex;
   flex-direction: column;
   gap: 2.5rem;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../../css/dashboard.css"; 
+import Footer from "../../components/footer";
+import Navbar from "../../components/insidenavbar";
 
 export default function BloodBankDashboard() {
   const [userName] = useState("Salifa Shrestha");
@@ -8,29 +10,7 @@ export default function BloodBankDashboard() {
 
   return (
     <div className="main-container">
-      {/* Top Navbar */}
-      <nav className="top-nav">
-        <div className="top-nav-wrapper">
-          <div className="logo-container">
-            <span>🩸</span> BloodLink
-          </div>
-          <div className="nav-links">
-            <button className="nav-btn active">
-              <span>🏠</span> <span>Home</span>
-            </button>
-            <button className="nav-btn">
-              <span>🔍</span> <span>Search</span>
-            </button>
-            <button className="nav-btn">
-              <span>❤️</span> <span>Donate</span>
-            </button>
-            <button className="nav-btn">
-              <span>👤</span> <span>Profile</span>
-            </button>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar />
       <div className="dashboard-wrapper">
         {/* Hero Section */}
         <header className="dashboard-hero">
@@ -113,8 +93,10 @@ export default function BloodBankDashboard() {
               </div>
             </div>
           </div>
+
         </section>
       </div>
+      <Footer />
     </div>
   );
 }

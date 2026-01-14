@@ -1,21 +1,19 @@
 import { useState } from "react";
 import "../css/insidenavbar.css";
 
-function Navbar() {
+function InsideNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Helper function to close menu after clicking a link
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
+    <nav className="inside-navbar">
+      <div className="inside-navbar-logo">
         <h1>BLOODLINK</h1>
       </div>
 
-      {/* Hamburger Icon with dynamic 'open' class */}
       <div
-        className={`hamburger ${menuOpen ? "open" : ""}`}
+        className={`inside-hamburger ${menuOpen ? "open" : ""}`}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <span></span>
@@ -23,15 +21,13 @@ function Navbar() {
         <span></span>
       </div>
 
-      {/* Navigation Links */}
-      <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-        <li><a href="/" onClick={closeMenu}>Home</a></li>
-        <li><a href="/donate" onClick={closeMenu}>Donate</a></li>
-        <li><a href="/about" onClick={closeMenu}>Search Donor</a></li>
-        <li><a href="/contact" onClick={closeMenu}>Profile</a></li>
-              </ul>
+      <ul className={`inside-nav-links ${menuOpen ? "active" : ""}`}>
+        <li><a href="/dashboard" onClick={closeMenu}>Dashboard</a></li>
+        <li><a href="/profile" onClick={closeMenu}>Profile</a></li>
+        <li><a href="/donate-blood" onClick={closeMenu}>Donate Blood</a></li>
+      </ul>
     </nav>
   );
 }
 
-export default Navbar;
+export default InsideNavbar;

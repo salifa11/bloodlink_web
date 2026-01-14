@@ -1,0 +1,130 @@
+/* GLOBAL RESET - Keep minimal to avoid conflicts */
+.inside-navbar * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.inside-navbar ul {
+  list-style: none;
+}
+
+/* NAVBAR */
+.inside-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #d32f2f, #b71c1c);
+  padding: 1rem 2.5rem;
+  color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  backdrop-filter: blur(6px);
+}
+
+/* LOGO */
+.inside-navbar-logo h1 {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* DESKTOP LINKS */
+.inside-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.inside-nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Animated underline */
+.inside-nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: white;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s ease;
+}
+
+.inside-nav-links a:hover::after {
+  width: 100%;
+}
+
+.inside-nav-links a:hover {
+  opacity: 0.85;
+}
+
+/* HAMBURGER */
+.inside-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.inside-hamburger span {
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .inside-hamburger {
+    display: flex;
+  }
+
+  /* Hamburger animation */
+  .inside-hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .inside-hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .inside-hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  .inside-nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    flex-direction: column;
+    padding: 2.5rem 0;
+    gap: 2rem;
+    transition: all 0.4s ease;
+    transform: translateY(-30px);
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  }
+
+  .inside-nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

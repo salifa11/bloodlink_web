@@ -5,20 +5,22 @@ ul {
   list-style: none;
 }
 
+/* NAVBAR CONTAINER */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #d32f2f;
-  padding: 1rem 2rem; /* Reduced horizontal padding */
+  padding: 1rem 2rem;
   color: white;
-  width: 100%; /* Force it to fill the screen */
-  position: fixed; /* Keep it at the top */
+  width: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
 }
 
+/* LOGO */
 .navbar-logo h1 {
   margin: 0;
   font-size: 1.5rem;
@@ -33,17 +35,39 @@ ul {
   gap: 2rem;
 }
 
+/* NAV LINKS */
 .nav-links a {
   color: white;
   text-decoration: none;
   font-weight: 500;
+  position: relative;
+  padding-bottom: 6px;
   transition: opacity 0.3s;
 }
 
-.nav-links a:hover {
-  opacity: 0.8;
+/* UNDERLINE */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease-in-out;
 }
 
+/* HOVER UNDERLINE */
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ACTIVE (CLICKED) LINK */
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* BUTTONS */
 .nav-buttons {
   display: flex;
   align-items: center;
@@ -109,15 +133,15 @@ ul {
 
   .nav-links {
     position: absolute;
-    top: 100%; /* Sits right under the navbar */
+    top: 100%;
     left: 0;
     width: 100%;
     background-color: #d32f2f;
     flex-direction: column;
     padding: 2rem 0;
     gap: 2rem;
-    
-    /* Animation: Slide Down & Fade */
+
+    /* Slide Down Animation */
     transition: all 0.4s ease-in-out;
     transform: translateY(-20px);
     opacity: 0;
@@ -135,6 +159,4 @@ ul {
     flex-direction: column;
     width: 100%;
   }
-
-
 }

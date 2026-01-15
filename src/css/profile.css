@@ -1,3 +1,7 @@
+/* ============================================================
+   PROFILE PAGE STYLES
+   ============================================================ */
+
 .profile-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
@@ -6,88 +10,101 @@
 }
 
 .profile-content {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
+/* --- Alerts & Notifications --- */
+.success-box, .error-box {
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  animation: slideIn 0.3s ease;
+}
+.success-box { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.error-box { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } }
+
+/* --- Skeleton Loading Animation --- */
+.skeleton {
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+  border: none !important;
+}
+@keyframes shine { to { background-position-x: -200%; } }
+
+/* --- Header Section --- */
 .profile-header {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   border-radius: 20px;
-  padding: 60px 40px 40px;
+  padding: 50px 20px;
   text-align: center;
   color: white;
   box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
   margin-bottom: 30px;
-  position: relative;
-  overflow: hidden;
-}
-
-.profile-header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .profile-avatar {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
-  margin: 0 auto 20px;
-  border: 5px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
+  margin: 0 auto 15px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
 }
 
-.profile-name {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0 0 10px;
-  letter-spacing: 0.5px;
-}
+.profile-name { font-size: 32px; font-weight: 700; margin-bottom: 5px; }
+.profile-member-since { font-size: 14px; opacity: 0.8; }
 
-.profile-member-since {
-  font-size: 16px;
-  opacity: 0.95;
-  font-weight: 400;
-}
-
+/* --- Details Box (The Container) --- */
 .contact-section {
   background: white;
   border-radius: 16px;
-  padding: 35px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .contact-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 25px;
   color: #1f2937;
-  margin: 0 0 25px;
+  font-weight: 700;
+  border-left: 4px solid #ef4444;
+  padding-left: 12px;
 }
 
+/* --- Labeled Placeholder Items --- */
 .contact-item {
   display: flex;
-  align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #f3f4f6;
+  flex-direction: column;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 15px;
+  transition: 0.2s;
+  position: relative;
 }
 
-.contact-item:last-child {
-  border-bottom: none;
+.contact-item:hover {
+  background: #fff;
+  border-color: #ef4444;
 }
 
-.contact-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 20px;
+/* Shows the data-label value as a red caption */
+.contact-item::before {
+  content: attr(data-label);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
   color: #ef4444;
-  flex-shrink: 0;
+  margin-bottom: 4px;
+  letter-spacing: 0.8px;
 }
 
 .contact-text {
@@ -96,113 +113,97 @@
   font-weight: 500;
 }
 
+/* --- Input Fields (Edit Mode) --- */
+.edit-input {
+  border: none;
+  background: transparent;
+  border-bottom: 1.5px solid #d1d5db;
+  padding: 5px 0;
+  font-size: 16px;
+  width: 100%;
+  outline: none;
+  color: #1f2937;
+}
+
+.edit-input:focus { border-bottom-color: #ef4444; }
+
+.name-input {
+  color: white;
+  border-bottom-color: white;
+  text-align: center;
+  font-size: 24px;
+  max-width: 350px;
+  margin: 0 auto 10px;
+}
+
+/* --- Stats Cards --- */
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-bottom: 30px;
 }
 
 .stat-card {
   background: white;
+  padding: 25px;
   border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15);
-}
-
-.stat-label {
-  font-size: 15px;
-  color: #6b7280;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.stat-value {
-  font-size: 28px;
-  font-weight: 700;
-  color: #ef4444;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 40px;
+.stat-label { font-size: 14px; color: #6b7280; font-weight: 600; }
+.stat-value { font-size: 26px; font-weight: 800; color: #ef4444; margin-top: 5px; }
+/* --- Action Buttons (FIXED SOLID COLORS) --- */
+.action-buttons { 
+  display: flex; 
+  gap: 15px; 
+  flex-wrap: wrap; 
+  margin-top: 30px;
 }
 
 .btn {
   flex: 1;
-  padding: 18px 40px;
+  min-width: 160px;
+  padding: 16px;
   border: none;
   border-radius: 12px;
-  font-size: 18px;
   font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Force text color to pure white */
+  color: #ffffff !important; 
+  
+  /* Ensure background is 100% solid and not transparent */
+  opacity: 1 !important;
+  display: block;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.btn-edit {
-  background: #ef4444;
-  color: white;
+.btn-edit, .btn-save { 
+  background-color: #ef4444 !important; /* Solid Red */
 }
 
-.btn-edit:hover {
-  background: #dc2626;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+.btn-logout { 
+  background-color: #374151 !important; /* Solid Dark Slate */
 }
 
-.btn-logout {
-  background: #ef4444;
-  color: white;
+.btn-delete { 
+  background-color: #b91c1c !important; /* Solid Deep Red */
 }
 
-.btn-logout:hover {
-  background: #dc2626;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+.btn:hover { 
+  transform: translateY(-3px); 
+  filter: brightness(1.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: #ffffff !important;
 }
 
-@media (max-width: 768px) {
-  .profile-container {
-    padding: 15px;
-    padding-top: 70px;
-  }
-
-  .profile-header {
-    padding: 40px 20px 30px;
-  }
-
-  .profile-name {
-    font-size: 26px;
-  }
-
-  .profile-avatar {
-    width: 110px;
-    height: 110px;
-  }
-
-  .contact-section {
-    padding: 25px 20px;
-  }
-
-  .stats-container {
-    grid-template-columns: 1fr;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-  }
+/* If buttons still look pink, it might be due to a global button style in another CSS file. 
+   This reset ensures no transparency: */
+button.btn {
+  background-image: none !important;
 }

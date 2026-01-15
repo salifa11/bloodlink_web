@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../../css/DonateBlood.css"; 
 import Footer from "../../components/footer";
 import Navbar from "../../components/insidenavbar";
+import { updateDonorProfile, getProfile } from "../../../utils/api";
 
 const DonateBlood = () => {
-
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -15,6 +15,32 @@ const DonateBlood = () => {
   
   const [errors, setErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Auto-fill form with logged-in user data
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await getProfile(token);
+          const user = response.user;
+          setFormData({
+            fullName: user.userName || '',
+            phone: user.phone || '',
+            city: user.location || '',
+            age: user.age || '',
+            bloodGroup: user.bloodGroup || ''
+          });
+        }
+      } catch (err) {
+        console.error("Error loading user profile:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUserData();
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -35,14 +61,22 @@ const DonateBlood = () => {
     return newErrors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      console.log('Donor Data:', formData);
-      setShowSuccess(true);
-      setFormData({ fullName: '', phone: '', city: '', age: '', bloodGroup: '' });
-      setErrors({});
-      setTimeout(() => setShowSuccess(false), 3000);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error("User not authenticated");
+
+        // Saves to database via updateProfile controller
+        await updateDonorProfile(formData, token);
+        
+        setShowSuccess(true);
+        setErrors({});
+        setTimeout(() => setShowSuccess(false), 3000);
+      } catch (err) {
+        setErrors({ submit: err.message });
+      }
     } else {
       setErrors(newErrors);
     }
@@ -54,19 +88,15 @@ const DonateBlood = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
+  if (loading) return <div>Loading profile...</div>;
+
   return (
     <div className="donate-container">
       <Navbar />
-      
-      {/* Animated Background Elements */}
       <div className="bg-circle-1"></div>
       <div className="bg-circle-2"></div>
       
-      {/* --- WRAPPER STARTED HERE --- */}
-      {/* This wrapper holds the main content and pushes the footer down */}
       <div className="donate-content">
-        
-        {/* Header */}
         <div className="donate-header">
           <div className="icon-wrapper">
             <svg className="heart-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +107,6 @@ const DonateBlood = () => {
           <p className="header-subtitle">Register as a blood donor and save lives</p>
         </div>
 
-        {/* Form Card */}
         <div className="donate-card">
           <h2 className="card-title">Donor Registration</h2>
           <p className="subtitle">Fill in the details to become a donor</p>
@@ -90,6 +119,8 @@ const DonateBlood = () => {
               Registration Successful!
             </div>
           )}
+
+          {errors.submit && <span className="error-text">{errors.submit}</span>}
 
           <div className="form-wrapper">
             <div className="form-group">
@@ -136,26 +167,8 @@ const DonateBlood = () => {
 
             <button onClick={handleSubmit} className="submit-btn">Register as Donor</button>
           </div>
-
-          <div className="info-section">
-            <div className="info-item">
-              <svg className="info-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-              </svg>
-              <span className="info-text">Eligibility: 18-65 years</span>
-            </div>
-            <div className="info-item">
-              <svg className="info-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-              </svg>
-              <span className="info-text">Donate every 3 months</span>
-            </div>
-          </div>
         </div>
       </div>
-      {/* --- WRAPPER ENDS HERE --- */}
-
-      {/* Footer is now outside the wrapper so it can be full width */}
       <Footer />
     </div>
   );

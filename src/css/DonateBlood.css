@@ -205,16 +205,29 @@ body {
 
 /* Success Alert */
 .success-alert {
-  background: #00b894;
-  color: white;
-  padding: 18px 24px;
-  border-radius: 16px;
-  margin-bottom: 30px;
+  background: #d1fae5; /* Soft green background */
+  color: #065f46;      /* Dark green text */
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 10px;
   font-weight: 600;
-  box-shadow: 0 10px 20px rgba(0, 184, 148, 0.2);
+  border: 1px solid #a7f3d0;
+  animation: slideDown 0.4s ease-out;
+}
+
+.success-icon {
+  width: 24px;  /* Fixed small width */
+  height: 24px; /* Fixed small height */
+  flex-shrink: 0;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Info Section */

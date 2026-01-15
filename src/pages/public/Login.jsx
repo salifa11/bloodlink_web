@@ -46,8 +46,9 @@ const Login = () => {
       console.log("✅ Token received:", result.token);
       console.log("✅ User data:", result.user);
       
-      // Save token
+      // Save token and role to localStorage
       localStorage.setItem("token", result.token);
+      localStorage.setItem("role", result.user.role); // Store the role
       
       // Verify it was saved
       const savedToken = localStorage.getItem("token");
@@ -56,8 +57,15 @@ const Login = () => {
 
       console.log("=====================");
 
-      // Navigate to dashboard
-      navigate("/dashboard");
+      // Role-based redirection logic
+      if (result.user.role === 'admin') {
+        console.log("Redirecting to Admin Dashboard");
+        navigate("/admin-dashboard"); // Ensure this route exists in App.jsx
+      } else {
+        console.log("Redirecting to User Dashboard");
+        navigate("/dashboard");
+      }
+
     } catch (err) {
       console.error("❌ Error during login:", err);
       alert(err.message || "Network error");
@@ -103,43 +111,3 @@ const Login = () => {
 };
 
 export default Login;
-// ```
-
-// ## Steps to Debug:
-
-// 1. **Restart your backend server** (the one running on port 5000)
-// 2. **Open TWO consoles:**
-//    - Backend terminal (where you run `npm start` for backend)
-//    - Browser DevTools Console (F12)
-
-// 3. **Try to login with:** `ram@gmail.com` / `123456`
-
-// 4. **Check BOTH consoles:**
-
-// **Backend Terminal should show:**
-// ```
-// === LOGIN REQUEST ===
-// Request body: { email: 'ram@gmail.com', password: '123456' }
-// Email: ram@gmail.com
-// Password received: Yes
-// User found: Yes
-// Password match: true
-// Token generated: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-// JWT_SECRET exists: true
-// JWT_EXPIRES_IN: 7d
-// Sending response: { message: 'Login successful', token: '...', user: {...} }
-// ===================
-// ```
-
-// **Browser Console should show:**
-// ```
-// === FRONTEND LOGIN ===
-// Form data: {email: 'ram@gmail.com', password: '123456'}
-// Response status: 200
-// Response OK: true
-// Response data: {message: 'Login successful', token: '...', user: {...}}
-// ✅ Token received: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-// ✅ User data: {id: 8, email: 'ram@gmail.com', name: 'ram'}
-// ✅ Token saved to localStorage: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-// ✅ Tokens match: true
-// =====================

@@ -1,0 +1,147 @@
+/* GLOBAL RESET for Admin Navbar */
+.admin-navbar * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.admin-navbar ul {
+  list-style: none;
+}
+
+/* NAVBAR CONTAINER */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Your core red theme */
+  padding: 1rem 2.5rem;
+  color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  backdrop-filter: blur(6px);
+}
+
+/* LOGO SECTION */
+.admin-navbar-logo h1 {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-navbar-logo span {
+  font-size: 0.8rem;
+  font-weight: 300;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* NAVIGATION LINKS */
+.admin-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.admin-nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.active-link::after {
+  content: "";
+  position: absolute;
+  width: 100% !important;
+  height: 2px;
+  background: white;
+  left: 0;
+  bottom: -5px;
+}
+
+/* LOGOUT BUTTON */
+.admin-logout-btn {
+  background: white;
+  color: #d32f2f;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-logout-btn:hover {
+  background: #f1f2f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* HAMBURGER FOR MOBILE */
+.admin-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.admin-hamburger span {
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .admin-hamburger {
+    display: flex;
+  }
+
+  .admin-hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .admin-hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .admin-hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  .admin-nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    flex-direction: column;
+    padding: 2.5rem 0;
+    gap: 2rem;
+    transition: all 0.4s ease;
+    transform: translateY(-30px);
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  }
+
+  .admin-nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

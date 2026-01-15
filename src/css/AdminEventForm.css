@@ -1,0 +1,179 @@
+/* Container and Page Layout */
+.admin-event-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.event-form-container {
+  max-width: 850px;
+  margin: 100px auto 60px;
+  padding: 20px;
+}
+
+.event-card {
+  background: #ffffff;
+  padding: 45px;
+  border-radius: 28px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.event-card-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.event-card-header h2 {
+  font-size: 30px;
+  color: #1e293b;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.event-card-header p {
+  color: #64748b;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* Grid Form Layout */
+.event-grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+/* Input Group Styling */
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 0.8px;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 15px;
+  background: #ffffff; 
+  /* FIX: Explicitly set dark text color */
+  color: #1e293b; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+/* FIX: Placeholder visibility */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+/* FIX: Visibility for Date/Time inputs and Icons */
+.form-group input[type="date"],
+.form-group input[type="time"] {
+  color: #1e293b;
+  font-family: inherit;
+}
+
+/* FIX: Makes the calendar and clock icons dark so they are visible on white */
+.form-group input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.3); /* Adjusts light icons to be dark */
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.form-group input:focus, 
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #ff6b6b;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Description Textarea */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* Submit Button Animation */
+.event-submit-btn {
+  grid-column: span 2;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 15px;
+  box-shadow: 0 10px 20px -5px rgba(30, 41, 59, 0.2);
+}
+
+.event-submit-btn:hover {
+  background: #ff6b6b;
+  transform: translateY(-4px);
+  box-shadow: 0 15px 25px -5px rgba(255, 107, 107, 0.3);
+}
+
+.event-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Success Message Fix */
+.event-success-msg {
+  background: #ecfdf5;
+  color: #065f46;
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-weight: 700;
+  border: 1px solid #10b981;
+  animation: slideIn 0.5s ease-out;
+}
+
+.check-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Grid */
+@media (max-width: 650px) {
+  .event-grid-form {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: span 1;
+  }
+  .event-card {
+    padding: 30px 20px;
+  }
+}

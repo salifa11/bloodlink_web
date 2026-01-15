@@ -149,6 +149,11 @@ export const getProfile = async (token) => {
   return apiCall('GET', '/profile', { token });
 };
 
+// Fetch all users/donors (Admin Only)
+export const getAllDonors = async (token) => {
+  return apiCall('GET', '/profile/all', { token }); // We will create this route next
+};
+
 export const updateDonorProfile = async (donorData, token) => {
   return apiCall('PUT', '/profile/update', {
     data: {
@@ -160,4 +165,23 @@ export const updateDonorProfile = async (donorData, token) => {
     },
     token: token
   });
+};
+
+export const registerAsDonor = async (donorData, token) => {
+  try {
+    const response = await fetch("http://localhost:5000/api/donor/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(donorData),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Registration failed");
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };

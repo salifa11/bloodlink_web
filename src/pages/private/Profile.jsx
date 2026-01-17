@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../css/profile.css";
 import Footer from "../../components/footer";
 import Navbar from "../../components/insidenavbar";
 
 const API_BASE = "http://localhost:5000/api/profile";
+const BACKEND_URL = "http://localhost:5000"; // Base URL for accessing images
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -15,14 +16,18 @@ const Profile = () => {
     age: "",
     bloodGroup: "",
     totalDonations: 0,
-    lastDonation: ""
+    lastDonation: "",
+    image: "" 
   });
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false); 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  
+  const fileInputRef = useRef(null); 
 
   useEffect(() => {
     fetchProfile();
@@ -52,12 +57,46 @@ const Profile = () => {
         age: userData.age || "",
         bloodGroup: userData.bloodGroup || "",
         totalDonations: userData.totalDonations || 0,
-        lastDonation: userData.lastDonation || ""
+        lastDonation: userData.lastDonation || "",
+        image: userData.image || "" 
       });
     } catch (err) {
       setError("Failed to load profile data.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profileImage", file); 
+
+    try {
+      setUploading(true);
+      setError("");
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE}/upload-image`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData 
+      });
+
+      if (!response.ok) throw new Error("Image upload failed");
+      
+      const data = await response.json();
+      // Immediately update local state with the new image path from server
+      setProfileData(prev => ({ ...prev, image: data.imageUrl }));
+      setSuccessMessage("Profile picture updated!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -81,15 +120,27 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
+      
+      /** * CRITICAL FIX: The server throws a 500 error if we send 'image' or 'memberSince' 
+       * to the text-based update endpoint. We use destructuring to remove them.
+       */
+      const { memberSince, image, ...dataToUpdate } = editData;
+
       const response = await fetch(`${API_BASE}/update`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(editData)
+        body: JSON.stringify(dataToUpdate) 
       });
-      if (!response.ok) throw new Error("Failed to update profile");
+      
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || "Update failed");
+      }
+
+      // Sync the display data with the edited data
       setProfileData(editData);
       setIsEditing(false);
       setSuccessMessage("Profile updated successfully!");
@@ -144,7 +195,31 @@ const Profile = () => {
           {error && <div className="error-box">✗ {error}</div>}
 
           <div className="profile-header">
-            <div className="profile-avatar"></div>
+            {/* Clickable Avatar with Background Image from Server */}
+            <div 
+              className="profile-avatar" 
+              style={{ 
+                backgroundImage: profileData.image ? `url(${BACKEND_URL}${profileData.image})` : "none",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: '#ddd',
+                position: 'relative',
+                cursor: 'pointer'
+              }}
+              onClick={() => fileInputRef.current.click()}
+            >
+               {uploading && <div className="avatar-loader">...</div>}
+               {!profileData.image && !uploading && <span>+</span>}
+            </div>
+
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              style={{ display: 'none' }} 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+            />
+
             {isEditing ? (
               <input
                 type="text"

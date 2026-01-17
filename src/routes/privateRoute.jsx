@@ -1,34 +1,36 @@
 import React, { Suspense } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+
+// Standard Imports
 import Profile from "../pages/private/Profile.jsx";
 import DonateBlood from "../pages/private/DonateBlood.jsx";
 
+// Lazy Loaded Components
 const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
 const Feedback = React.lazy(() => import("../pages/private/Feedback.jsx"));
+const ViewEvents = React.lazy(() => import("../pages/private/ViewEvents.jsx"));
 
 const PrivateRoutes = () => {
   const location = useLocation();
-  
-  // Check if token exists
   const token = localStorage.getItem('token');
   
-  console.log("=== PRIVATE ROUTES CHECK ===");
-  console.log("Current path:", location.pathname);
-  console.log("Token from localStorage:", token);
-  console.log("Token exists:", !!token);
-  console.log("==========================");
+  // Normalize the path: remove trailing slashes and convert to lowercase
+  const currentPath = location.pathname.toLowerCase().replace(/\/$/, "");
 
-  // If no token, redirect to login
+  // Debugging logs to verify token status during navigation
+  console.log("=== PRIVATE ROUTE DEBUG ===");
+  console.log("Normalized Path:", currentPath);
+  console.log("Auth Token Found:", !!token);
+  console.log("===========================");
+
+  // If no token exists, redirect to login
   if (!token) {
-    console.log("❌ No token - Redirecting to /login");
     return <Navigate to="/login" replace />;
   }
 
-  console.log("✅ Token found - Allowing access");
-
-  // Route to the correct component based on current path
+  // Component router based on the normalized path
   const renderComponent = () => {
-    switch (location.pathname) {
+    switch (currentPath) {
       case '/dashboard':
         return <Dashboard />;
       case '/profile':
@@ -36,18 +38,20 @@ const PrivateRoutes = () => {
       case '/feedback':
         return <Feedback />;
       case '/donate-blood':
-        return <DonateBlood />;  
+        return <DonateBlood />; 
+      case '/view-events': // This must match your Navbar Link exactly
+        return <ViewEvents />;   
       default:
+        // If path is unknown, stay on dashboard instead of kicking to login
         return <Navigate to="/dashboard" replace />;
     }
   };
 
   return (
-    <Suspense fallback={<div style={{padding: '20px', fontSize: '18px'}}>Loading...</div>}>
+    <Suspense fallback={<div className="admin-loader">Loading Content...</div>}>
       {renderComponent()}
     </Suspense>
   );
 };
 
 export default PrivateRoutes;
-

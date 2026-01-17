@@ -1,25 +1,26 @@
-import "./App.css";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
 
 import PrivateRoutes from "./routes/privateRoute.jsx";
 import PublicRoutes from "./routes/publicRoute.jsx";
-import AdminDashboard from "./pages/private/AdminDashboard.jsx"; // Ensure this import exists
+import AdminDashboard from "./pages/private/AdminDashboard.jsx";
 import AdminEventForm from "./pages/private/AdminEventForm.jsx";
 
 function App() {
   const userRole = localStorage.getItem("role");
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="loader">Loading BloodLink...</div>}>
       <Routes>
-        {/* Private routes */}
+        {/* All Private User Routes point to the PrivateRoutes gatekeeper */}
         <Route path="/dashboard" element={<PrivateRoutes />} />
         <Route path="/profile" element={<PrivateRoutes />} />
         <Route path="/feedback" element={<PrivateRoutes />} />
         <Route path="/donate-blood" element={<PrivateRoutes />} />
+        <Route path="/view-events" element={<PrivateRoutes />} />
         
-        {/* Admin Specific Route */}
+        {/* Admin Specific Routes with Role Protection */}
         <Route 
           path="/admin-dashboard" 
           element={userRole === "admin" ? <AdminDashboard /> : <Navigate to="/dashboard" />} 
@@ -29,7 +30,7 @@ function App() {
           element={userRole === "admin" ? <AdminEventForm /> : <Navigate to="/dashboard" />} 
         />
 
-        {/* Public routes - catch everything else */}
+        {/* Public routes (Login, Register, Landing) */}
         <Route path="/*" element={<PublicRoutes />} />
       </Routes>
     </Suspense>

@@ -1,23 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../../css/ViewEvents.css";
 import Navbar from "../../components/insidenavbar";
 import Footer from "../../components/footer";
+import { useNavigate } from 'react-router-dom';
+
+
+const BACKEND_URL = "http://localhost:5000";
 
 const ViewEvents = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const events = [
-    { id: 1, title: "Blood Drive at Community Center", date: "Sun, Jun 15", time: "9:00 - 3:00", hospital: "City Hospital", type: "Urgent", image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=400" },
-    { id: 2, title: "Weekend Medical Awareness", date: "Sat, Jun 21", time: "10:00 - 1:00", hospital: "Noble Care", type: "Upcoming", image: "https://images.unsplash.com/photo-1576091160550-2173dad99901?auto=format&fit=crop&q=80&w=400" },
-    { id: 3, title: "River Cleaning Campaign", date: "Sun, Jun 22", time: "8:00 - 11:00", hospital: "Green Earth", type: "Urgent", image: "https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?auto=format&fit=crop&q=80&w=400" },
-  ];
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${BACKEND_URL}/api/events/all`);
+      if (!response.ok) throw new Error("Failed to load events");
+      const data = await response.json();
+      setEvents(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Helper function to format 24h time string (HH:mm:ss) to 12h (hh:mm AM/PM)
+   */
+  const formatTime = (timeString) => {
+    if (!timeString) return "N/A";
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const formattedHour = hour % 12 || 12;
+    return `${formattedHour}:${minutes} ${ampm}`;
+  };
+
+  /**
+   * Helper function to format YYYY-MM-DD to a "Pretty" local date
+   */
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    // Using slashes instead of dashes prevents timezone shifts in some browsers
+    const date = new Date(dateString.replace(/-/g, '\/')); 
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
+  const filteredEvents = events.filter(event =>
+    event.eventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    event.location.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (loading) return <div className="loader">Loading events...</div>;
 
   return (
     <div className="view-events-page">
       <Navbar />
 
       <main className="events-main">
-        {/* Search and Filter Section */}
         <section className="search-section">
           <div className="search-bar-container">
             <div className="search-input-wrapper">
@@ -31,30 +84,42 @@ const ViewEvents = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="filter-chips">
-              <button className="chip active">All</button>
-              <button className="chip">Blood Donation</button>
-              <button className="chip">Awareness</button>
-            </div>
           </div>
         </section>
 
-        {/* Featured Events Section */}
         <section className="events-section">
-          <h2 className="section-title">Featured Events</h2>
+          <h2 className="section-title">Available Opportunities</h2>
+          {error && <p className="error-msg">{error}</p>}
+          
           <div className="events-grid">
-            {events.map(event => (
+            {filteredEvents.map(event => (
               <div key={event.id} className="event-card">
                 <div className="card-image">
-                  <img src={event.image} alt={event.title} />
-                  <span className={`status-badge ${event.type.toLowerCase()}`}>{event.type}</span>
+                  <img 
+                    src={event.eventImage ? `${BACKEND_URL}${event.eventImage}` : "/default-event.jpg"} 
+                    alt={event.eventName} 
+                  />
+                  <span className="status-badge urgent">{event.eventType}</span>
                 </div>
                 <div className="card-body">
-                  <h3 className="event-title">{event.title}</h3>
-                  <p className="event-info">{event.date} | {event.time}</p>
+                  <h3 className="event-title">{event.eventName}</h3>
+                  
+                  {/* Applied Pretty Formatting for Date and Time here */}
+                  <p className="event-info">
+                    <strong>{formatDate(event.eventDate)}</strong>
+                    <br />
+                    {formatTime(event.startTime)} - {formatTime(event.endTime)}
+                  </p>
+
                   <div className="card-footer">
-                    <span className="hospital-tag">{event.hospital}</span>
-                    <button className="more-btn">
+                    <span className="hospital-tag">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight: '4px'}}>
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      {event.location}
+                    </span>
+                    <button className="more-btn" onClick={() => navigate(`/event/${event.id}`)}>
                       More 
                       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -65,34 +130,10 @@ const ViewEvents = () => {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* View Events (All Opportunities) Section */}
-        <section className="events-section">
-          <h2 className="section-title">View Events</h2>
-          <div className="events-grid">
-            {/* Reusing the same data for demo purposes */}
-            {[...events].reverse().map(event => (
-              <div key={`all-${event.id}`} className="event-card">
-                <div className="card-image">
-                  <img src={event.image} alt={event.title} />
-                  <span className={`status-badge ${event.type.toLowerCase()}`}>{event.type}</span>
-                </div>
-                <div className="card-body">
-                  <h3 className="event-title">{event.title}</h3>
-                  <p className="event-info">{event.date} | {event.time}</p>
-                  <div className="card-footer">
-                    <span className="hospital-tag">{event.hospital}</span>
-                    <button className="more-btn">More 
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          {filteredEvents.length === 0 && !loading && (
+            <p className="no-events">No events found matching your search.</p>
+          )}
         </section>
       </main>
 

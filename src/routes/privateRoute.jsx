@@ -4,6 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 // Standard Imports
 import Profile from "../pages/private/Profile.jsx";
 import DonateBlood from "../pages/private/DonateBlood.jsx";
+import AdminDonors from "../pages/private/AdminDonors.jsx";
 
 // Lazy Loaded Components
 const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
@@ -40,7 +41,9 @@ const PrivateRoutes = () => {
       case '/donate-blood':
         return <DonateBlood />; 
       case '/view-events': // This must match your Navbar Link exactly
-        return <ViewEvents />;   
+        return <ViewEvents />; 
+      case '/admin-donors':
+        return <AdminDonors />;    
       default:
         // If path is unknown, stay on dashboard instead of kicking to login
         return <Navigate to="/dashboard" replace />;

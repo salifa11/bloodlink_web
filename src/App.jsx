@@ -6,6 +6,8 @@ import PrivateRoutes from "./routes/privateRoute.jsx";
 import PublicRoutes from "./routes/publicRoute.jsx";
 import AdminDashboard from "./pages/private/AdminDashboard.jsx";
 import AdminEventForm from "./pages/private/AdminEventForm.jsx";
+import AdminDonors from "./pages/private/AdminDonors.jsx";
+import EventDetails from "./pages/private/EventDetails.jsx";
 
 function App() {
   const userRole = localStorage.getItem("role");
@@ -29,6 +31,13 @@ function App() {
           path="/admin-event-form" 
           element={userRole === "admin" ? <AdminEventForm /> : <Navigate to="/dashboard" />} 
         />
+        <Route 
+          path="/admin-donors" 
+          element={userRole === "admin" ? <AdminDonors /> : <Navigate to="/dashboard" />} 
+        />
+
+        <Route path="/event/:id" element={<EventDetails />} />
+      
 
         {/* Public routes (Login, Register, Landing) */}
         <Route path="/*" element={<PublicRoutes />} />

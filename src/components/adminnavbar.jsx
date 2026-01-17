@@ -38,6 +38,11 @@ function AdminNavbar() {
           </a>
         </li>
         <li>
+          <a href="/admin-donors" onClick={closeMenu}>
+            Donors List
+          </a>
+        </li>
+        <li>
           <button onClick={handleLogout} className="admin-logout-btn">
             Logout
           </button>

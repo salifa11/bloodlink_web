@@ -1,0 +1,130 @@
+/* Container spacing and Backdrop */
+.admin-dashboard-wrapper {
+    background-color: #f4f7f6;
+    min-height: 100vh;
+}
+
+.admin-main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px; /* Moves content slightly down from navbar */
+}
+
+/* COMPACT MANAGEMENT CARD */
+.admin-management-card {
+    background: #ffffff;
+    /* Aggressive vertical padding (15px) for the 'thin' look */
+    padding: 30px 45px !important; 
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    min-height: 120px; /* Maintains consistency with user dash */
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Title Styling */
+.admin-card-title {
+    font-size: 32px !important;
+    color: #333333;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.admin-card-subtitle {
+    color: #888888;
+    font-size: 15px;
+    margin: 5px 0 0 0;
+}
+
+/* THE RED STAT BOX */
+.red-stat-box {
+    background-color: #c21616; /* Core theme red */
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 18px;
+    text-align: center;
+    min-width: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-label {
+    display: block;
+    color: #fbfafa;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+}
+
+.stat-number {
+    font-size: 40px !important; /* Bold stat number */
+    font-weight: 600;
+    line-height: 1;
+}
+
+/* TABLE CARD STYLING */
+.admin-table-card {
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 20px 45px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.management-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.management-table th {
+    text-align: left;
+    padding: 25px 10px;
+    color: #bbbbbb; /* Light grey headers */
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.management-table td {
+    padding: 20px 10px;
+    color: #333333;
+    font-size: 14px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+/* BLOOD GROUP BADGE */
+.blood-badge {
+    background-color: #fff1f1;
+    color: #e74c3c;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.hospital-name {
+    color: #555555;
+    font-weight: 500;
+}
+
+.no-data-msg {
+    padding: 40px;
+    text-align: center;
+    color: #aaaaaa;
+    font-style: italic;
+}

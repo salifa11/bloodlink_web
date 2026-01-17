@@ -1,0 +1,173 @@
+/* Page Background */
+.event-details-page {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* 2. SPECIFIC SPACER CLASS */
+.navbar-spacer {
+    height: 80px; /* Adjust this height based on your Navbar's thickness */
+    width: 100%;
+}
+
+.details-wrapper {
+    max-width: 1000px; 
+    margin: 40px auto; /* 40px gap after the spacer */
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px; /* Spacious separation between sections */
+}
+
+/* CARDS STYLING */
+.event-hero-header {
+    background: white;
+    padding: 40px 50px !important;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-left: 12px solid #ba2829;
+}
+
+.event-main-title {
+    font-size: 38px;
+    color: #1a1a1a;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+}
+
+.event-loc-badge {
+    display: flex;
+    align-items: center;
+    color: #ba2829;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* METADATA GRID */
+.meta-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.meta-item {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.meta-label {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    margin-bottom: 10px;
+}
+
+.meta-value {
+    font-size: 17px;
+    color: #222;
+    font-weight: 700;
+}
+
+/* DESCRIPTION */
+.description-card {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 24px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+.card-sub-title {
+    color: #ba2829;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.description-text {
+    line-height: 1.9;
+    color: #4a4a4a;
+    font-size: 16px;
+}
+
+/* DARK ACTION BOX */
+.ready-to-join-box {
+    background: #1a1a1a;
+    color: white;
+    padding: 50px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.ready-title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.logged-in-notice {
+    color: #ccc;
+    margin-bottom: 35px;
+    font-size: 16px;
+}
+
+.user-highlight {
+    color: #ff4d4d;
+    font-weight: 800;
+}
+
+/* BUTTONS */
+.apply-btn-group {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+.btn-apply {
+    padding: 18px 45px;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    min-width: 220px;
+    /* 1. Add base transition for smooth animation */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-apply.donor {
+    background-color: #ba2829; /* Theme Red */
+    color: white;
+}
+
+.btn-apply.volunteer {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+/* 2. Add Hover Effects */
+.btn-apply:hover {
+    transform: translateY(-4px); /* Moves button up slightly */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Adds deeper shadow on hover */
+}
+
+/* 3. Add Active (Click) Effect */
+.btn-apply:active {
+    transform: translateY(-1px); /* Moves back down when clicked */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific hover color for volunteer button */
+.btn-apply.volunteer:hover {
+    background-color: #f8f8f8;
+}
+
+/* Specific hover color for donor button */
+.btn-apply.donor:hover {
+    background-color: #d51010; /* Slightly brighter red */
+}

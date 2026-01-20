@@ -43,6 +43,11 @@ function AdminNavbar() {
           </a>
         </li>
         <li>
+          <a href="/admin-event-applications" onClick={closeMenu}>
+            Event Applications
+          </a>
+        </li>
+        <li>
           <button onClick={handleLogout} className="admin-logout-btn">
             Logout
           </button>

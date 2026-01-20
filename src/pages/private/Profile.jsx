@@ -4,7 +4,7 @@ import Footer from "../../components/footer";
 import Navbar from "../../components/insidenavbar";
 
 const API_BASE = "http://localhost:5000/api/profile";
-const BACKEND_URL = "http://localhost:5000"; // Base URL for accessing images
+const BACKEND_URL = "http://localhost:5000"; 
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -14,9 +14,9 @@ const Profile = () => {
     phone: "",
     location: "",
     age: "",
-    bloodGroup: "",
-    totalDonations: 0,
-    lastDonation: "",
+    bloodgroup: "",     // Mapping to lowercase
+    totaldonations: 0,  // Mapping to lowercase
+    lastdonation: "",   // Mapping to lowercase
     image: "" 
   });
 
@@ -48,6 +48,7 @@ const Profile = () => {
       const data = await response.json();
       const userData = data.user;
 
+      // Syncing with exact database column names
       setProfileData({
         userName: userData.userName || "",
         memberSince: new Date(userData.createdAt).getFullYear().toString(),
@@ -55,9 +56,9 @@ const Profile = () => {
         phone: userData.phone || "",
         location: userData.location || "",
         age: userData.age || "",
-        bloodGroup: userData.bloodGroup || "",
-        totalDonations: userData.totalDonations || 0,
-        lastDonation: userData.lastDonation || "",
+        bloodgroup: userData.bloodgroup || "",      // Lowercase
+        totaldonations: userData.totaldonations || 0, // Lowercase
+        lastdonation: userData.lastdonation || "",    // Lowercase
         image: userData.image || "" 
       });
     } catch (err) {
@@ -89,7 +90,6 @@ const Profile = () => {
       if (!response.ok) throw new Error("Image upload failed");
       
       const data = await response.json();
-      // Immediately update local state with the new image path from server
       setProfileData(prev => ({ ...prev, image: data.imageUrl }));
       setSuccessMessage("Profile picture updated!");
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -120,11 +120,8 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      
-      /** * CRITICAL FIX: The server throws a 500 error if we send 'image' or 'memberSince' 
-       * to the text-based update endpoint. We use destructuring to remove them.
-       */
-      const { memberSince, image, ...dataToUpdate } = editData;
+      // Remove display-only fields before sending update
+      const { memberSince, image, totaldonations, lastdonation, ...dataToUpdate } = editData;
 
       const response = await fetch(`${API_BASE}/update`, {
         method: "PUT",
@@ -140,7 +137,6 @@ const Profile = () => {
         throw new Error(errData.message || "Update failed");
       }
 
-      // Sync the display data with the edited data
       setProfileData(editData);
       setIsEditing(false);
       setSuccessMessage("Profile updated successfully!");
@@ -195,10 +191,10 @@ const Profile = () => {
           {error && <div className="error-box">✗ {error}</div>}
 
           <div className="profile-header">
-            {/* Clickable Avatar with Background Image from Server */}
             <div 
               className="profile-avatar" 
               style={{ 
+                
                 backgroundImage: profileData.image ? `url(${BACKEND_URL}${profileData.image})` : "none",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -261,7 +257,7 @@ const Profile = () => {
 
             <div className="contact-item" data-label="Blood Group">
               {isEditing ? (
-                <select name="bloodGroup" value={editData.bloodGroup} onChange={handleInputChange} className="edit-input">
+                <select name="bloodgroup" value={editData.bloodgroup} onChange={handleInputChange} className="edit-input">
                   <option value="">Select Blood Group</option>
                   <option value="A+">A+</option><option value="A-">A-</option>
                   <option value="B+">B+</option><option value="B-">B-</option>
@@ -269,7 +265,7 @@ const Profile = () => {
                   <option value="O+">O+</option><option value="O-">O-</option>
                 </select>
               ) : (
-                <span className="contact-text">{profileData.bloodGroup || "Not set"}</span>
+                <span className="contact-text">{profileData.bloodgroup || "Not set"}</span>
               )}
             </div>
           </div>
@@ -277,11 +273,17 @@ const Profile = () => {
           <div className="stats-container">
             <div className="stat-card">
               <p className="stat-label">Total Donations</p>
-              <p className="stat-value">{profileData.totalDonations}</p>
+              {/* Corrected mapping */}
+              <p className="stat-value">{profileData.totaldonations || 0}</p>
             </div>
             <div className="stat-card">
               <p className="stat-label">Last Donation</p>
-              <p className="stat-value">{profileData.lastDonation || "N/A"}</p>
+              {/* Corrected mapping and date formatting */}
+              <p className="stat-value">
+                {profileData.lastdonation 
+                  ? new Date(profileData.lastdonation).toLocaleDateString() 
+                  : "N/A"}
+              </p>
             </div>
           </div>
 

@@ -1,0 +1,126 @@
+/* 1. Layout & Footer Fix */
+.admin-dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.admin-main-content {
+  flex: 1; /* Pushes footer to bottom */
+  padding: 100px 5% 40px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. Top Header & Stats Card */
+.admin-system-card {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-main-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.total-stat-box {
+  background: #c8102e;
+  color: white;
+  padding: 15px 35px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+/* 3. Table Styling */
+.admin-table-container {
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.management-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.management-table th {
+  text-align: left;
+  padding: 18px 20px;
+  color: #bbb;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.management-table td {
+  padding: 22px 20px;
+  border-bottom: 1px solid #f8f8f8;
+  font-size: 0.95rem;
+}
+
+/* 4. Action Buttons (Tick & Cross) */
+.action-btns {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-tick, .btn-cross {
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-tick {
+  background-color: #e6fffa;
+  color: #38a169;
+  border: 1px solid #c6f6d5;
+}
+
+.btn-tick:hover {
+  background-color: #38a169;
+  color: white;
+}
+
+.btn-cross {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #fed7d7;
+}
+
+.btn-cross:hover {
+  background-color: #e53e3e;
+  color: white;
+}
+
+/* 5. Footer */
+footer {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 25px 0;
+  text-align: center;
+  margin-top: auto;
+}

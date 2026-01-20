@@ -1,84 +1,74 @@
-/* Container spacing and Backdrop */
+/* Layout & Spacing */
 .admin-dashboard-wrapper {
-    background-color: #f4f7f6;
+    background-color: #f8fafb;
     min-height: 100vh;
 }
 
 .admin-main-content {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 30px 20px; /* Moves content slightly down from navbar */
+    padding: 120px 30px; /* Reduced from 450px for better accessibility */
 }
 
-/* COMPACT MANAGEMENT CARD */
+/* Header Section Alignment */
 .admin-management-card {
     background: #ffffff;
-    /* Aggressive vertical padding (15px) for the 'thin' look */
-    padding: 30px 45px !important; 
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    min-height: 120px; /* Maintains consistency with user dash */
+    padding: 30px 45px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
 }
 
 .card-header-flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Pushes red stat box to the right */
     align-items: center;
     width: 100%;
 }
 
-/* Title Styling */
 .admin-card-title {
-    font-size: 32px !important;
-    color: #333333;
-    font-weight: 400;
+    font-size: 28px;
+    color: #1a1a1a;
+    font-weight: 700;
     margin: 0;
-    letter-spacing: -0.5px;
 }
 
 .admin-card-subtitle {
-    color: #888888;
-    font-size: 15px;
-    margin: 5px 0 0 0;
+    color: #6c757d;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
-/* THE RED STAT BOX */
+/* Red Stat Box Styling */
 .red-stat-box {
-    background-color: #c21616; /* Core theme red */
-    color: #ffffff;
-    padding: 15px 30px;
-    border-radius: 18px;
-    text-align: center;
-    min-width: 190px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    color: white;
+    padding: 18px 30px;
+    border-radius: 14px;
+    text-align: right;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.25);
 }
 
 .stat-label {
-    display: block;
-    color: #fbfafa;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    margin-bottom: 2px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    opacity: 0.9;
 }
 
 .stat-number {
-    font-size: 40px !important; /* Bold stat number */
-    font-weight: 600;
+    font-size: 42px;
+    font-weight: 800;
+    display: block;
     line-height: 1;
 }
 
-/* TABLE CARD STYLING */
+/* Table Area Styling */
 .admin-table-card {
     background: #ffffff;
-    border-radius: 25px;
-    padding: 20px 45px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    padding: 10px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .management-table {
@@ -88,43 +78,104 @@
 
 .management-table th {
     text-align: left;
-    padding: 25px 10px;
-    color: #bbbbbb; /* Light grey headers */
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 20px 10px;
+    color: #999;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 2px solid #f8f9fa;
 }
 
 .management-table td {
-    padding: 20px 10px;
-    color: #333333;
+    padding: 18px 10px;
     font-size: 14px;
-    border-bottom: 1px solid #f9f9f9;
+    color: #333;
+    border-bottom: 1px solid #f8f9fa;
 }
 
-.font-bold {
+/* Status Badges */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
-/* BLOOD GROUP BADGE */
-.blood-badge {
-    background-color: #fff1f1;
-    color: #e74c3c;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: 700;
+.status-badge.available {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.unavailable {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* ACTION BUTTONS (Refined Design) */
+.action-btns-flex {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-toggle {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
     font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.hospital-name {
-    color: #555555;
-    font-weight: 500;
+.btn-available {
+    background-color: #1a1a1a; /* Professional dark look */
+    color: white;
 }
 
-.no-data-msg {
-    padding: 40px;
-    text-align: center;
-    color: #aaaaaa;
-    font-style: italic;
+.btn-available:hover:not(:disabled) {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-unavailable {
+    background-color: #f1f3f5;
+    color: #495057;
+}
+
+.btn-unavailable:hover:not(:disabled) {
+    background-color: #e9ecef;
+    color: #c62828;
+    transform: translateY(-2px);
+}
+
+.btn-toggle:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Search Input Styling */
+.search-container {
+    flex: 1;
+    margin: 0 30px;
+}
+
+/* Fix for invisible text in search input */
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #f0f0f0;
+    border-radius: 12px;
+    font-size: 16px; /* Larger font for readability */
+    color: #333333 !important; /* Forces dark text color */
+    background-color: #ffffff !important; /* Ensures white background */
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: #aaaaaa; /* Light grey for placeholder text */
 }

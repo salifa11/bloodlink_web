@@ -26,6 +26,7 @@ function InsideNavbar() {
         <li><a href="/profile" onClick={closeMenu}>Profile</a></li>
         <li><a href="/donate-blood" onClick={closeMenu}>Donate Blood</a></li>
         <li><a href="/view-events" onClick={closeMenu}>View Events</a></li>
+        <li><a href="/blood-banks" onClick={closeMenu}>Blood Banks</a></li>
       </ul>
     </nav>
   );

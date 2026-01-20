@@ -8,6 +8,8 @@ import AdminDashboard from "./pages/private/AdminDashboard.jsx";
 import AdminEventForm from "./pages/private/AdminEventForm.jsx";
 import AdminDonors from "./pages/private/AdminDonors.jsx";
 import EventDetails from "./pages/private/EventDetails.jsx";
+import AdminEventApps from "./pages/private/AdminEventApps.jsx";
+import BloodBankList from "./pages/private/Bloodbanklist.jsx";
 
 function App() {
   const userRole = localStorage.getItem("role");
@@ -37,7 +39,14 @@ function App() {
         />
 
         <Route path="/event/:id" element={<EventDetails />} />
-      
+
+        <Route 
+          path="/admin-event-applications" 
+          element={userRole === "admin" ? <AdminEventApps /> : <Navigate to="/dashboard" />} 
+        />
+
+        // Inside App.jsx routes
+        <Route path="/blood-banks" element={<BloodBankList />} />
 
         {/* Public routes (Login, Register, Landing) */}
         <Route path="/*" element={<PublicRoutes />} />

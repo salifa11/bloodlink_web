@@ -54,6 +54,7 @@ const Login = () => {
       const savedToken = localStorage.getItem("token");
       console.log("✅ Token saved to localStorage:", savedToken);
       console.log("✅ Tokens match:", savedToken === result.token);
+      console.log("guguggaga:", result.user.role);  
 
       console.log("=====================");
 

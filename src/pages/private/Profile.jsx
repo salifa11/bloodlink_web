@@ -14,9 +14,9 @@ const Profile = () => {
     phone: "",
     location: "",
     age: "",
-    bloodgroup: "",     // Mapping to lowercase
-    totaldonations: 0,  // Mapping to lowercase
-    lastdonation: "",   // Mapping to lowercase
+    bloodGroup: "",        // Changed to camelCase
+    totalDonations: 0,     // Changed to camelCase
+    lastDonation: "",      // Changed to camelCase
     image: "" 
   });
 
@@ -48,7 +48,9 @@ const Profile = () => {
       const data = await response.json();
       const userData = data.user;
 
-      // Syncing with exact database column names
+      console.log("Profile data received:", userData); // Debug log
+
+      // Using camelCase to match backend response
       setProfileData({
         userName: userData.userName || "",
         memberSince: new Date(userData.createdAt).getFullYear().toString(),
@@ -56,12 +58,13 @@ const Profile = () => {
         phone: userData.phone || "",
         location: userData.location || "",
         age: userData.age || "",
-        bloodgroup: userData.bloodgroup || "",      // Lowercase
-        totaldonations: userData.totaldonations || 0, // Lowercase
-        lastdonation: userData.lastdonation || "",    // Lowercase
+        bloodGroup: userData.bloodGroup || "",           // camelCase
+        totalDonations: userData.totalDonations || 0,    // camelCase
+        lastDonation: userData.lastDonation || "",       // camelCase
         image: userData.image || "" 
       });
     } catch (err) {
+      console.error("Profile fetch error:", err);
       setError("Failed to load profile data.");
     } finally {
       setLoading(false);
@@ -121,7 +124,9 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       // Remove display-only fields before sending update
-      const { memberSince, image, totaldonations, lastdonation, ...dataToUpdate } = editData;
+      const { memberSince, image, totalDonations, lastDonation, ...dataToUpdate } = editData;
+
+      console.log("Sending update:", dataToUpdate); // Debug log
 
       const response = await fetch(`${API_BASE}/update`, {
         method: "PUT",
@@ -137,11 +142,17 @@ const Profile = () => {
         throw new Error(errData.message || "Update failed");
       }
 
-      setProfileData(editData);
+      const updatedData = await response.json();
+      console.log("Update response:", updatedData); // Debug log
+      
+      // Refresh profile data from server
+      await fetchProfile();
+      
       setIsEditing(false);
       setSuccessMessage("Profile updated successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
+      console.error("Update error:", err);
       setError(err.message);
     }
   };
@@ -194,7 +205,6 @@ const Profile = () => {
             <div 
               className="profile-avatar" 
               style={{ 
-                
                 backgroundImage: profileData.image ? `url(${BACKEND_URL}${profileData.image})` : "none",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -257,7 +267,12 @@ const Profile = () => {
 
             <div className="contact-item" data-label="Blood Group">
               {isEditing ? (
-                <select name="bloodgroup" value={editData.bloodgroup} onChange={handleInputChange} className="edit-input">
+                <select 
+                  name="bloodGroup" 
+                  value={editData.bloodGroup} 
+                  onChange={handleInputChange} 
+                  className="edit-input"
+                >
                   <option value="">Select Blood Group</option>
                   <option value="A+">A+</option><option value="A-">A-</option>
                   <option value="B+">B+</option><option value="B-">B-</option>
@@ -265,7 +280,7 @@ const Profile = () => {
                   <option value="O+">O+</option><option value="O-">O-</option>
                 </select>
               ) : (
-                <span className="contact-text">{profileData.bloodgroup || "Not set"}</span>
+                <span className="contact-text">{profileData.bloodGroup || "Not set"}</span>
               )}
             </div>
           </div>
@@ -273,15 +288,13 @@ const Profile = () => {
           <div className="stats-container">
             <div className="stat-card">
               <p className="stat-label">Total Donations</p>
-              {/* Corrected mapping */}
-              <p className="stat-value">{profileData.totaldonations || 0}</p>
+              <p className="stat-value">{profileData.totalDonations || 0}</p>
             </div>
             <div className="stat-card">
               <p className="stat-label">Last Donation</p>
-              {/* Corrected mapping and date formatting */}
               <p className="stat-value">
-                {profileData.lastdonation 
-                  ? new Date(profileData.lastdonation).toLocaleDateString() 
+                {profileData.lastDonation 
+                  ? new Date(profileData.lastDonation).toLocaleDateString() 
                   : "N/A"}
               </p>
             </div>

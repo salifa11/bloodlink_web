@@ -5,6 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import Profile from "../pages/private/Profile.jsx";
 import DonateBlood from "../pages/private/DonateBlood.jsx";
 import AdminDonors from "../pages/private/AdminDonors.jsx";
+import AdminDashboard from "../pages/private/AdminDashboard.jsx";
 
 // Lazy Loaded Components
 const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
@@ -44,9 +45,11 @@ const PrivateRoutes = () => {
         return <ViewEvents />; 
       case '/admin-donors':
         return <AdminDonors />;    
+      case '/admin-dashboard':
+        return <AdminDashboard />;  
       default:
         // If path is unknown, stay on dashboard instead of kicking to login
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/register" replace />;
     }
   };
 

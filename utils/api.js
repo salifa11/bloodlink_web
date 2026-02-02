@@ -185,3 +185,24 @@ export const registerAsDonor = async (donorData, token) => {
     throw error;
   }
 };
+
+// Admin delete user function
+export const deleteUserByAdmin = async (userId, token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/user/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const responseData = await response.json();
+    if (!response.ok) {
+      throw new Error(responseData?.message || "Failed to delete user");
+    }
+    return responseData;
+  } catch (error) {
+    throw new Error(error.message || "Network error");
+  }
+};

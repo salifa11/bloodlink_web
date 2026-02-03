@@ -16,7 +16,10 @@ const Login = () => {
   });
 
   const onLogin = async (data) => {
+    // clear any stale auth data before attempting a fresh login
     try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
       console.log("=== FRONTEND LOGIN ===");
       console.log("Form data:", data);
 

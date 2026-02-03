@@ -12,7 +12,11 @@ import AdminEventApps from "./pages/private/AdminEventApps.jsx";
 import BloodBankList from "./pages/private/Bloodbanklist.jsx";
 
 function App() {
-  const userRole = localStorage.getItem("role");
+  // Read role dynamically during render via RequireAdmin wrapper below
+  const RequireAdmin = ({ children }) => {
+    const userRole = localStorage.getItem("role");
+    return userRole === "admin" ? children : <Navigate to="/dashboard" />;
+  };
 
   return (
     <Suspense fallback={<div className="loader">Loading BloodLink...</div>}>
@@ -25,24 +29,40 @@ function App() {
         <Route path="/view-events" element={<PrivateRoutes />} />
         
         {/* Admin Specific Routes with Role Protection */}
-        <Route 
-          path="/admin-dashboard" 
-          element={userRole === "admin" ? <AdminDashboard /> : <Navigate to="/dashboard" />} 
+        <Route
+          path="/admin-dashboard"
+          element={
+            <RequireAdmin>
+              <AdminDashboard />
+            </RequireAdmin>
+          }
         />
-        <Route 
-          path="/admin-event-form" 
-          element={userRole === "admin" ? <AdminEventForm /> : <Navigate to="/dashboard" />} 
+        <Route
+          path="/admin-event-form"
+          element={
+            <RequireAdmin>
+              <AdminEventForm />
+            </RequireAdmin>
+          }
         />
-        <Route 
-          path="/admin-donors" 
-          element={userRole === "admin" ? <AdminDonors /> : <Navigate to="/dashboard" />} 
+        <Route
+          path="/admin-donors"
+          element={
+            <RequireAdmin>
+              <AdminDonors />
+            </RequireAdmin>
+          }
         />
 
         <Route path="/event/:id" element={<EventDetails />} />
 
-        <Route 
-          path="/admin-event-applications" 
-          element={userRole === "admin" ? <AdminEventApps /> : <Navigate to="/dashboard" />} 
+        <Route
+          path="/admin-event-applications"
+          element={
+            <RequireAdmin>
+              <AdminEventApps />
+            </RequireAdmin>
+          }
         />
 
         // Inside App.jsx routes

@@ -176,4 +176,17 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Responsive adjustments for Contact page */
+@media (max-width: 800px) {
+  .contact-landing { padding: 60px 12px; }
+  .contact-cards { gap: 12px; }
+  .contact-card { width: 100%; max-width: 420px; }
+  .cta-btn { width: 100%; }
+}
+
+@media (max-width: 420px) {
+  .contact-landing { padding: 48px 10px; }
+  .contact-card { padding: 16px; }
+}
+
 

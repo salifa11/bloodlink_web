@@ -239,3 +239,18 @@
 button.btn {
   background-image: none !important;
 }
+
+/* Responsive adjustments for profile page */
+@media (max-width: 900px) {
+  .profile-content { padding: 0 16px; }
+  .stats-container { grid-template-columns: 1fr; }
+  .profile-header { padding: 28px 16px; }
+}
+
+@media (max-width: 480px) {
+  .profile-avatar { width: 100px; height: 100px; font-size: 28px; }
+  .profile-name { font-size: 20px; }
+  .profile-content { max-width: 100%; padding: 0 12px; }
+  .action-buttons { flex-direction: column; gap: 10px; }
+  .btn { min-width: 100%; }
+}

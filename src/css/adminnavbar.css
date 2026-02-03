@@ -145,3 +145,25 @@
     pointer-events: auto;
   }
 }
+
+/* Per-file responsive tweaks for admin navbar */
+.admin-navbar {
+  height: 72px;
+}
+
+/* Prevent content being hidden behind fixed navbar on admin pages */
+.admin-dashboard-wrapper .admin-main-content,
+.admin-page-wrapper .admin-main-content,
+.admin-dashboard-wrapper main,
+.admin-main-content {
+  padding-top: 100px; /* ensures main content sits below fixed navbar */
+}
+
+@media (max-width: 768px) {
+  .admin-navbar { height: 64px; padding: 0.6rem 1rem; }
+  .admin-dashboard-wrapper .admin-main-content,
+  .admin-page-wrapper .admin-main-content,
+  .admin-main-content { padding-top: 84px; }
+  .admin-nav-links { padding: 1.5rem 0; }
+  .admin-logout-btn { padding: 8px 16px; }
+}

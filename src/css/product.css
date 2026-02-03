@@ -74,6 +74,10 @@ button[type="submit"]:hover {
   transform: translateY(-1px);
 }
 
+@media (max-width: 480px) {
+  form { margin: 20px; padding: 18px; }
+}
+
 /* Button active */
 button[type="submit"]:active {
   transform: translateY(0);

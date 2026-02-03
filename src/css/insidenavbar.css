@@ -128,3 +128,12 @@
     pointer-events: auto;
   }
 }
+
+/* Per-file responsive tweaks for inside navbar */
+.inside-navbar { height: 72px; }
+.admin-dashboard-wrapper .admin-main-content, .admin-page-wrapper .admin-main-content, .admin-main-content { padding-top: 100px; }
+
+@media (max-width:768px) {
+  .inside-navbar { height: 64px; padding: 0.6rem 1rem; }
+  .admin-dashboard-wrapper .admin-main-content, .admin-page-wrapper .admin-main-content, .admin-main-content { padding-top: 84px; }
+}

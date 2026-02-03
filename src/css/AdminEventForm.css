@@ -6,8 +6,10 @@
 }
 
 .event-form-container {
-  max-width: 850px;
-  margin: 100px auto 60px;
+  max-width: 950px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 110px auto 60px; /* leave room for fixed admin navbar */
   padding: 20px;
 }
 
@@ -176,4 +178,50 @@
   .event-card {
     padding: 30px 20px;
   }
+}
+
+/* Stronger, per-file responsive rules for create event form */
+@media (max-width: 900px) {
+  .event-form-container { max-width: 760px; margin-top: 100px; padding: 18px; }
+  .event-card { padding: 28px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
+  .event-grid-form { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group input[type="file"] { width: 100%; }
+  .form-group input[type="date"], .form-group input[type="time"] { width: 100%; }
+  .event-submit-btn { grid-column: span 2; }
+}
+
+@media (max-width: 650px) {
+  .event-form-container { max-width: 520px; margin-top: 90px; padding: 16px; }
+  .event-card { padding: 20px; border-radius: 14px; }
+  .event-grid-form { grid-template-columns: 1fr; gap: 12px; }
+  .full-width { grid-column: span 1; }
+  .form-group input, .form-group select, .form-group textarea { padding: 12px 14px; font-size: 15px; }
+  .form-group input[type="file"]::-webkit-file-upload-button { padding: 8px 12px; }
+  .event-card-header h2 { font-size: 20px; }
+  .event-submit-btn { grid-column: span 1; width: 100%; padding: 14px; }
+}
+
+@media (max-width: 420px) {
+  .event-form-container { margin-top: 80px; padding: 12px; }
+  .event-card { padding: 14px; }
+  .form-group label { font-size: 12px; }
+  .form-group input, .form-group select, .form-group textarea { font-size: 14px; padding: 10px 12px; }
+  .event-submit-btn { padding: 12px; font-size: 15px; }
+}
+
+/* Ensure wide controls don't overflow */
+.event-card, .event-form-container { overflow: visible; }
+.form-group input[type="file"], .form-group input[type="date"], .form-group input[type="time"] { box-sizing: border-box; }
+
+@media (max-width: 900px) {
+  .event-form-container { margin-top: 100px; padding: 18px; }
+  .event-card { padding: 28px; border-radius: 20px; }
+  .event-card-header h2 { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  .event-form-container { margin-top: 90px; padding: 12px; }
+  .event-card { padding: 18px; }
+  .event-card-header h2 { font-size: 20px; }
+  .event-submit-btn { width: 100%; }
 }

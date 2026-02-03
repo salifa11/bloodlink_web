@@ -144,3 +144,17 @@
   animation: pulse 2.5s infinite;
 }
 
+/* Responsive adjustments for Donate page */
+@media (max-width: 800px) {
+  .donate-landing { padding: 80px 16px; }
+  .donate-info { gap: 12px; padding: 0 6%; }
+  .info-box { width: 100%; max-width: 420px; }
+  .cta-btn { width: 100%; padding: 12px 18px; }
+}
+
+@media (max-width: 480px) {
+  .donate-landing { padding: 60px 12px; }
+  .donate-landing h1 { font-size: 1.8rem; }
+  .info-box { padding: 18px; }
+}
+

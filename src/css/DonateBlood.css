@@ -262,3 +262,11 @@ body {
   .donate-card { padding: 35px 20px; }
   .info-section { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 420px) {
+  .donate-content { padding-top: 100px; padding-left: 12px; padding-right: 12px; }
+  .header-title { font-size: 30px; }
+  .donate-card { padding: 22px; border-radius: 18px; }
+  .form-input { padding: 12px 14px; font-size: 15px; }
+  .submit-btn { width: 100%; padding: 14px; }
+}

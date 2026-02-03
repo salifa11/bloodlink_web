@@ -186,3 +186,13 @@
     gap: 15px;
   }
 }
+
+/* Additional responsive rules */
+@media (max-width: 600px) {
+  .events-main { padding: 60px 12px 40px; }
+  .events-grid { grid-template-columns: 1fr; gap: 18px; }
+  .card-image { height: 160px; }
+  .card-body { padding: 14px; }
+  .more-btn { padding: 8px 12px; width: auto; }
+  .search-bar-container { padding: 12px; }
+}

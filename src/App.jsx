@@ -10,6 +10,7 @@ import AdminDonors from "./pages/private/AdminDonors.jsx";
 import EventDetails from "./pages/private/EventDetails.jsx";
 import AdminEventApps from "./pages/private/AdminEventApps.jsx";
 import BloodBankList from "./pages/private/Bloodbanklist.jsx";
+import AdminEventList from "./pages/private/Admineventlist.jsx";
 
 function App() {
   // Read role dynamically during render via RequireAdmin wrapper below
@@ -61,6 +62,14 @@ function App() {
           element={
             <RequireAdmin>
               <AdminEventApps />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/events"
+          element={
+            <RequireAdmin>
+              <AdminEventList />
             </RequireAdmin>
           }
         />

@@ -21,7 +21,7 @@ const ViewEvents = () => {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${BACKEND_URL}/api/events/all`);
+      const response = await fetch(`${BACKEND_URL}/api/events/`);
       if (!response.ok) throw new Error("Failed to load events");
       const data = await response.json();
       setEvents(data);

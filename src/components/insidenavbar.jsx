@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../css/insidenavbar.css";
+import NotificationBell from "./NotificationBell";
 
 function InsideNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,6 +11,10 @@ function InsideNavbar() {
     <nav className="inside-navbar">
       <div className="inside-navbar-logo">
         <h1>BLOODLINK</h1>
+      </div>
+
+      <div style={{ marginLeft: "auto", marginRight: "1rem" }}>
+        <NotificationBell />
       </div>
 
       <div

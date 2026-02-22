@@ -11,7 +11,7 @@ import AdminDashboard from "../pages/private/AdminDashboard.jsx";
 const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
 const Feedback = React.lazy(() => import("../pages/private/Feedback.jsx"));
 const ViewEvents = React.lazy(() => import("../pages/private/ViewEvents.jsx"));
-const History = React.lazy(() => import("../pages/private/History.jsx"));
+
 
 const PrivateRoutes = () => {
   const location = useLocation();

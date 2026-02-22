@@ -1,0 +1,319 @@
+/* ===== Ambulance Modal Styles ===== */
+
+/* Modal Overlay */
+.ambulance-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.ambulance-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.ambulance-modal-header {
+  background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.ambulance-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ambulance-icon {
+  font-size: 2.5rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.ambulance-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ambulance-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ambulance-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+.ambulance-modal-body {
+  padding: 2rem;
+}
+
+.ambulance-info-text {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem 0;
+  font-weight: 500;
+}
+
+/* Hospitals List */
+.hospitals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hospital-card {
+  background: #f4f6f8;
+  border: 2px solid #e8eaed;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.hospital-card:hover {
+  border-color: #e63946;
+  box-shadow: 0 8px 24px rgba(230, 57, 70, 0.1);
+  transform: translateX(4px);
+}
+
+.hospital-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hospital-name {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.hospital-phone {
+  margin: 0;
+  font-size: 1rem;
+  color: #e63946;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  word-break: break-all;
+}
+
+/* Call Button */
+.call-btn {
+  background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.call-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+}
+
+.call-btn:active {
+  transform: scale(0.98);
+}
+
+.call-btn span {
+  font-size: 1.1rem;
+}
+
+/* Modal Footer */
+.ambulance-modal-footer {
+  background: #f9f9f9;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e8eaed;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  bottom: 0;
+}
+
+.emergency-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #c1121f;
+  font-weight: 600;
+  background: #fff0f1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.close-modal-btn {
+  background: transparent;
+  border: 2px solid #e63946;
+  color: #e63946;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-modal-btn:hover {
+  background: #e63946;
+  color: white;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .ambulance-modal {
+    width: 95%;
+    max-height: 90vh;
+    border-radius: 16px;
+  }
+
+  .ambulance-modal-header {
+    padding: 1.5rem;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .ambulance-modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .ambulance-icon {
+    font-size: 2rem;
+  }
+
+  .ambulance-modal-body {
+    padding: 1.5rem;
+  }
+
+  .hospital-card {
+    padding: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .call-btn {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .ambulance-modal-footer {
+    padding: 1rem 1.5rem;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .emergency-note {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ambulance-modal {
+    border-radius: 14px;
+  }
+
+  .ambulance-modal-header,
+  .ambulance-modal-body,
+  .ambulance-modal-footer {
+    border-radius: 0;
+  }
+
+  .ambulance-icon {
+    font-size: 1.75rem;
+  }
+
+  .ambulance-modal-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .hospital-name {
+    font-size: 0.95rem;
+  }
+
+  .hospital-phone {
+    font-size: 0.9rem;
+  }
+
+  .call-btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+}

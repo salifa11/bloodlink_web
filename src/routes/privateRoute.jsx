@@ -11,6 +11,7 @@ import AdminDashboard from "../pages/private/AdminDashboard.jsx";
 const Dashboard = React.lazy(() => import("../pages/private/Dashboard.jsx"));
 const Feedback = React.lazy(() => import("../pages/private/Feedback.jsx"));
 const ViewEvents = React.lazy(() => import("../pages/private/ViewEvents.jsx"));
+const History = React.lazy(() => import("../pages/private/History.jsx"));
 
 const PrivateRoutes = () => {
   const location = useLocation();
@@ -43,6 +44,8 @@ const PrivateRoutes = () => {
         return <DonateBlood />; 
       case '/view-events': // This must match your Navbar Link exactly
         return <ViewEvents />; 
+      case '/history':
+        return <History />;
       case '/admin-donors':
         return <AdminDonors />;    
       case '/admin-dashboard':

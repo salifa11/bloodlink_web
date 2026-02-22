@@ -3,7 +3,7 @@ import "../../css/profile.css";
 import Footer from "../../components/footer";
 import Navbar from "../../components/insidenavbar";
 
-const API_BASE = "http://localhost:5000/api/profile";
+const API_BASE = "http://localhost:5000/api/auth/profile";
 const BACKEND_URL = "http://localhost:5000"; 
 
 const Profile = () => {
@@ -45,15 +45,14 @@ const Profile = () => {
         }
       });
       if (!response.ok) throw new Error("Failed to fetch profile");
-      const data = await response.json();
-      const userData = data.user;
+      const userData = await response.json();
 
       console.log("Profile data received:", userData); // Debug log
 
       // Using camelCase to match backend response
       setProfileData({
         userName: userData.userName || "",
-        memberSince: new Date(userData.createdAt).getFullYear().toString(),
+        memberSince: userData.createdAt ? new Date(userData.createdAt).getFullYear().toString() : new Date().getFullYear().toString(),
         userEmail: userData.userEmail || "",
         phone: userData.phone || "",
         location: userData.location || "",
@@ -82,7 +81,7 @@ const Profile = () => {
       setUploading(true);
       setError("");
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE}/upload-image`, {
+      const response = await fetch(`http://localhost:5000/api/auth/upload-image`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`
@@ -128,7 +127,7 @@ const Profile = () => {
 
       console.log("Sending update:", dataToUpdate); // Debug log
 
-      const response = await fetch(`${API_BASE}/update`, {
+      const response = await fetch(`http://localhost:5000/api/auth/update`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

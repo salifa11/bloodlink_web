@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import "../../css/AdminEventForm.css";
 import AdminNavbar from '../../components/adminnavbar';
 import Footer from '../../components/footer';
@@ -20,6 +21,38 @@ const AdminEventForm = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
+
+  // Load event when editing
+  useEffect(() => {
+    if (!isEdit) return;
+
+    const fetchEvent = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/events/${id}`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Failed to load event');
+
+        // Map fields from API to form state (adjust if field names differ)
+        setEventData({
+          eventName: data.eventName || '',
+          location: data.location || '',
+          eventDate: data.eventDate ? data.eventDate.split('T')[0] : '',
+          startTime: data.startTime || '',
+          endTime: data.endTime || '',
+          capacity: data.capacity || '',
+          description: data.description || '',
+          eventType: data.eventType || 'Blood Donation'
+        });
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchEvent();
+  }, [id, isEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,11 +84,13 @@ const AdminEventForm = () => {
         formData.append("eventImage", eventImage); 
       }
 
-      const response = await fetch("http://localhost:5000/api/events/create", {
-        method: "POST",
+      const url = isEdit ? `http://localhost:5000/api/events/${id}` : "http://localhost:5000/api/events/create";
+      const method = isEdit ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Authorization": `Bearer ${token}`
-          // CRITICAL: No 'Content-Type' header here
         },
         body: formData
       });
@@ -65,6 +100,12 @@ const AdminEventForm = () => {
       if (!response.ok) throw new Error(data.message || "Server Error (500)");
 
       setShowSuccess(true);
+      // If editing, navigate back to events list after successful update
+      if (isEdit) {
+        navigate('/admin/events');
+        return;
+      }
+
       setEventData({
         eventName: '', location: '', eventDate: '',
         startTime: '', endTime: '', capacity: '',

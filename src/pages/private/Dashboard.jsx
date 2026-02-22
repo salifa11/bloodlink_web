@@ -217,7 +217,7 @@ export default function BloodBankDashboard() {
             </div>
             <div className="card-item">
               <div className="card-content">
-                <p>Your last donation was on: <strong>{userData.lastDonation}</strong></p>
+                <p>Your last donation was on: <strong>{new Date(userData.lastDonation).toLocaleDateString()}</strong></p>
               </div>
             </div>
           </section>

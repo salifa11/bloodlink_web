@@ -149,12 +149,12 @@ const AdminEventList = () => {
                     </td>
                     <td data-label="Actions">
                       <div className="action-buttons">
-                        <button 
-                          className="view-btn"
-                          onClick={() => navigate(`/events/${event.id}`)}
-                          title="View event details"
+                        <button
+                          className="edit-btn"
+                          onClick={() => navigate(`/admin/edit-event/${event.id}`)}
+                          title="Edit event"
                         >
-                          👁️ View
+                          ✏️ Edit
                         </button>
                         <button 
                           className="delete-btn"

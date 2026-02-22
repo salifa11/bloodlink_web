@@ -73,6 +73,14 @@ function App() {
             </RequireAdmin>
           }
         />
+        <Route
+          path="/admin/edit-event/:id"
+          element={
+            <RequireAdmin>
+              <AdminEventForm />
+            </RequireAdmin>
+          }
+        />
 
         // Inside App.jsx routes
         <Route path="/blood-banks" element={<BloodBankList />} />

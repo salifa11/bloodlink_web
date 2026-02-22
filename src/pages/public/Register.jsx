@@ -11,14 +11,18 @@ const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(RegisterSchema),
   });
+  const password = watch("password");
 
   const onRegister = async (data) => {
     setApiError("");
@@ -86,25 +90,116 @@ const Register = () => {
 
             <div className="form-group">
               <label>Password</label>
-              <input
-                {...register("password")}
-                type="password"
-                placeholder="••••••••"
-                disabled={isLoading}
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "12px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "18px",
+                  }}
+                >
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
               {errors.password && (
                 <p className="error">{errors.password.message}</p>
+              )}
+              {password && (
+                <div
+                  style={{
+                    fontSize: "12px",
+                    marginTop: "8px",
+                    padding: "8px",
+                    background: "#f8fafc",
+                    borderRadius: "6px",
+                    border: "1px solid #e2e8f0",
+                  }}
+                >
+                  <p style={{ color: "#64748b", marginBottom: "4px" }}>
+                    <strong>Password requirements:</strong>
+                  </p>
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      margin: 0,
+                      padding: 0,
+                    }}
+                  >
+                    <li
+                      style={{
+                        color: password.length >= 8 ? "#15803d" : "#94a3b8",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      ✓ At least 8 characters
+                    </li>
+                    <li
+                      style={{
+                        color: /[A-Z]/.test(password) ? "#15803d" : "#94a3b8",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      ✓ One uppercase letter (A-Z)
+                    </li>
+                    <li
+                      style={{
+                        color: /[0-9]/.test(password) ? "#15803d" : "#94a3b8",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      ✓ One number (0-9)
+                    </li>
+                    <li
+                      style={{
+                        color: /[!@#$%^&*]/.test(password) ? "#15803d" : "#94a3b8",
+                      }}
+                    >
+                      ✓ One special character (!@#$%^&*)
+                    </li>
+                  </ul>
+                </div>
               )}
             </div>
 
             <div className="form-group">
               <label>Confirm Password</label>
-              <input
-                {...register("confirmPassword")}
-                type="password"
-                placeholder="••••••••"
-                disabled={isLoading}
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  {...register("confirmPassword")}
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "12px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "18px",
+                  }}
+                >
+                  {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
               {errors.confirmPassword && (
                 <p className="error">{errors.confirmPassword.message}</p>
               )}

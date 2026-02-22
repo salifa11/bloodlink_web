@@ -7,6 +7,8 @@ const Contact = React.lazy(() => import("../pages/public/Contact"));
 const Donate = React.lazy(() => import("../pages/public/Donate"));
 const Login = React.lazy(() => import("../pages/public/Login"));
 const Register = React.lazy(() => import("../pages/public/Register"));
+const ForgotPassword = React.lazy(() => import("../pages/public/ForgotPassword"));
+const ResetPassword = React.lazy(() => import("../pages/public/ResetPassword"));
 
 const PublicRoutes = () => {
   return (
@@ -18,6 +20,8 @@ const PublicRoutes = () => {
         <Route path="/donate" element={<Donate />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

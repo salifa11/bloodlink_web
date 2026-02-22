@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "../../css/auth.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./schema/login.schema";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -95,15 +97,51 @@ const Login = () => {
 
           <div className="form-group">
             <label>Password</label>
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="••••••••"
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                {...register("password")}
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "18px",
+                }}
+              >
+                {showPassword ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
             {errors.password && <p className="error">{errors.password.message}</p>}
           </div>
 
           <button type="submit" className="btn">Login</button>
+
+          <div style={{ textAlign: "center", marginTop: "12px" }}>
+            <Link 
+              to="/forgot-password" 
+              style={{ 
+                fontSize: "14px", 
+                color: "#ff6b6b", 
+                textDecoration: "none",
+                fontWeight: "600",
+                borderBottom: "2px solid transparent",
+                transition: "border-color 0.3s"
+              }}
+              onMouseEnter={(e) => e.target.style.borderColor = "#ff6b6b"}
+              onMouseLeave={(e) => e.target.style.borderColor = "transparent"}
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
           <p className="login-text">
             Don't have an account? <Link to="/register">Register</Link>

@@ -33,6 +33,20 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
+  // Helper to safely get JSON or text from a response
+  const getResponseBody = async (response) => {
+    const contentType = response.headers.get("content-type") || "";
+    const text = await response.text();
+    if (contentType.includes("application/json")) {
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        return { __text: text };
+      }
+    }
+    return { __text: text };
+  };
+
   const fetchProfile = async () => {
     try {
       setLoading(true);
@@ -44,8 +58,14 @@ const Profile = () => {
           "Content-Type": "application/json"
         }
       });
-      if (!response.ok) throw new Error("Failed to fetch profile");
-      const userData = await response.json();
+      if (!response.ok) {
+        const errBody = await getResponseBody(response);
+        throw new Error(errBody?.message || errBody?.__text || "Failed to fetch profile");
+      }
+      const userData = await getResponseBody(response);
+      if (userData && userData.__text) {
+        throw new Error("Invalid JSON response from server when fetching profile");
+      }
 
       console.log("Profile data received:", userData); // Debug log
 
@@ -88,11 +108,19 @@ const Profile = () => {
         },
         body: formData 
       });
+      if (!response.ok) {
+        const errBody = await getResponseBody(response);
+        throw new Error(errBody?.message || errBody?.__text || "Image upload failed");
+      }
 
-      if (!response.ok) throw new Error("Image upload failed");
-      
-      const data = await response.json();
-      setProfileData(prev => ({ ...prev, image: data.imageUrl }));
+      const data = await getResponseBody(response);
+      if (data && data.__text) {
+        throw new Error("Invalid JSON response from server after image upload");
+      }
+
+      // Support either `imageUrl` or `image` fields from backend
+      const imageUrl = data.imageUrl || data.image || "";
+      setProfileData(prev => ({ ...prev, image: imageUrl }));
       setSuccessMessage("Profile picture updated!");
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
@@ -135,13 +163,15 @@ const Profile = () => {
         },
         body: JSON.stringify(dataToUpdate) 
       });
-      
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.message || "Update failed");
+        const errData = await getResponseBody(response);
+        throw new Error(errData.message || errData.__text || "Update failed");
       }
 
-      const updatedData = await response.json();
+      const updatedData = await getResponseBody(response);
+      if (updatedData && updatedData.__text) {
+        throw new Error("Invalid JSON response from server after update");
+      }
       console.log("Update response:", updatedData); // Debug log
       
       // Refresh profile data from server
